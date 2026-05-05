@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <title>بيّنة — داشبورد التوصيات الاستثمارية</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap"
+          rel="stylesheet"/>
+    <style>
+
+        /* ══════════════════════════════════════════
+           DESIGN TOKENS
+        ══════════════════════════════════════════ */
+        :root {
+          --navy:      #0c1e45;
+          --navy2:     #153882;
+          --blue:      #1a56db;
+          --blue2:     #3b82f6;
+          --blue3:     #93c5fd;
+          --sky:       #eff6ff;
+          --sky2:      #dbeafe;
+          --white:     #ffffff;
+          --slate:     #3d5a80;
+          --slate2:    #7a90b0;
+          --slate3:    #c8d8ee;
+          --bg:        #eef4fd;
+          --border:    #dde8f5;
+
+          --green:     #065f46; --green-bg: #ecfdf5; --green-bd: #6ee7b7;
+          --amber:     #78350f; --amber-bg: #fffbeb; --amber-bd: #fcd34d;
+          --red:       #7f1d1d; --red-bg:   #fef2f2; --red-bd:   #fca5a5;
+          --gold:      #92400e; --gold-bg:  #fffbeb; --gold-bd:  #f59e0b;
+
+          --r:   18px;
+          --r-m: 12px;
+          --r-s: 8px;
+          --sh1: 0 2px 8px rgba(12,30,69,.07),0 1px 2px rgba(12,30,69,.04);
+          --sh2: 0 8px 32px rgba(12,30,69,.11),0 2px 6px rgba(12,30,69,.06);
+          --sh3: 0 16px 56px rgba(12,30,69,.14),0 4px 12px rgba(12,30,69,.08);
+        }
+
+        *,*::before,*::after { margin:0; padding:0; box-sizing:border-box }
+        html { scroll-behavior:smooth }
+
+        body {
+          font-family: 'Tajawal', sans-serif;
+          background: var(--bg);
+          min-height: 100vh;
+          color: var(--navy);
+          overflow-x: hidden;
+        }
+
+        /* ── Background ── */
+        .bg-layer {
+          position: fixed; inset: 0; z-index: 0; pointer-events: none;
+          background:
+            radial-gradient(ellipse 90% 70% at 5% 0%,   rgba(59,130,246,.12) 0%, transparent 55%),
+            radial-gradient(ellipse 70% 60% at 95% 85%,  rgba(16,185,129,.08) 0%, transparent 55%),
+            radial-gradient(ellipse 55% 45% at 55% 45%,  rgba(99,102,241,.05) 0%, transparent 55%),
+            linear-gradient(168deg, #d4e8fa 0%, #eaf3ff 30%, #f4f9ff 65%, #f0f8f4 100%);
+        }
+
+        /* ── City skyline ── */
+        .city-bg {
+          position: fixed; bottom: 0; left: 0; width: 100%;
+          z-index: 0; pointer-events: none; opacity: .09;
+        }
+
+        /* ── Page wrapper ── */
+        .page {
+          position: relative; z-index: 1;
+          max-width: 1000px; margin: 0 auto;
+          padding: 56px 24px 160px;
+        }
+
+        /* ══════════════════════════════════════════
+           HEADER
+        ══════════════════════════════════════════ */
+        .header {
+          text-align: center; margin-bottom: 52px;
+          animation: fadeDown .7s cubic-bezier(.22,1,.36,1) both;
+        }
+        @keyframes fadeDown {
+          from { opacity:0; transform:translateY(-22px) }
+          to   { opacity:1; transform:translateY(0) }
+        }
+
+        .eyebrow {
+          display: inline-flex; align-items: center; gap: 10px;
+          font-size: 10.5px; font-weight: 700; letter-spacing: 3px;
+          color: var(--blue2); text-transform: uppercase; margin-bottom: 14px;
+        }
+        .eyebrow::before,.eyebrow::after {
+          content: ''; width: 32px; height: 1.5px;
+          background: linear-gradient(90deg,transparent,var(--blue2));
+          border-radius: 1px;
+        }
+        .eyebrow::after { transform: scaleX(-1) }
+
+        .logo {
+          font-size: 72px; font-weight: 900; letter-spacing: -3px; line-height: 1.2;
+          background: linear-gradient(140deg, var(--navy) 0%, var(--blue) 50%, var(--blue2) 100%);
+          -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+          background-clip: text; margin-bottom: 16px;
+        }
+
+        .logo-bar {
+          width: 52px; height: 3.5px; margin: 0 auto 18px;
+          background: linear-gradient(90deg, var(--blue), var(--blue2), var(--blue3));
+          border-radius: 2px;
+        }
+
+        .tagline {
+          font-size: 17px; font-weight: 400; color: var(--slate);
+          line-height: 1.9; max-width: 620px; margin: 0 auto;
+        }
+
+        /* ══════════════════════════════════════════
+           INPUT CARD
+        ══════════════════════════════════════════ */
+        .input-card {
+          background: var(--white);
+          border-radius: var(--r);
+          border: 1px solid rgba(59,130,246,.14);
+          padding: 42px 46px 38px;
+          box-shadow: var(--sh3);
+          animation: fadeUp .75s .1s cubic-bezier(.22,1,.36,1) both;
+        }
+        @keyframes fadeUp {
+          from { opacity:0; transform:translateY(26px) }
+          to   { opacity:1; transform:translateY(0) }
+        }
+
+        .ic-top { display:flex; align-items:center; gap:18px; margin-bottom:32px }
+        .ic-icon-wrap {
+          width: 52px; height: 52px; border-radius: 15px; flex-shrink: 0;
+          background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+          display: flex; align-items: center; justify-content: center;
+          box-shadow: 0 6px 18px rgba(26,86,219,.38);
+        }
+        .ic-icon-wrap svg {
+          width: 23px; height: 23px;
+          stroke: #fff; fill: none;
+          stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+        }
+        .ic-text-title { font-size: 22px; font-weight: 800; color: var(--navy) }
+        .ic-text-sub   { font-size: 13px; color: var(--slate2); margin-top: 3px }
+
+        .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-bottom:26px }
+        .field { display:flex; flex-direction:column; gap:9px }
+
+        .field label {
+          font-size: 13px; font-weight: 700; color: var(--navy);
+          display: flex; align-items: center; gap: 7px;
+        }
+        .lbl-tag {
+          width: 22px; height: 22px; border-radius: 6px;
+          background: var(--sky2); display: inline-flex;
+          align-items: center; justify-content: center; font-size: 12px;
+        }
+
+        .sel-wrap { position:relative }
+        select, input[type=number] {
+          width: 100%; padding: 14px 18px;
+          font-family: 'Tajawal', sans-serif;
+          font-size: 15px; font-weight: 500;
+          color: var(--navy); background: #f6faff;
+          border: 1.5px solid var(--border); border-radius: var(--r-s);
+          outline: none; appearance: none; -webkit-appearance: none;
+          direction: rtl;
+          transition: border-color .2s, box-shadow .2s, background .2s;
+        }
+        select:hover, input:hover    { border-color: var(--blue3) }
+        select:focus, input:focus    {
+          border-color: var(--blue); background: var(--white);
+          box-shadow: 0 0 0 3px rgba(26,86,219,.11);
+        }
+        input::placeholder { color: #b8cce0; font-weight:400 }
+        .arr {
+          position: absolute; left:16px; top:50%;
+          transform: translateY(-50%); pointer-events: none;
+          width:0; height:0;
+          border-right:5px solid transparent;
+          border-left: 5px solid transparent;
+          border-top: 6px solid var(--slate);
+        }
+
+        .btn-row { display:grid; grid-template-columns:1fr auto; gap:14px }
+
+        .btn-main {
+          padding: 16px 32px;
+          font-family: 'Tajawal', sans-serif;
+          font-size: 16px; font-weight: 700; color: #fff;
+          background: linear-gradient(135deg, var(--navy2) 0%, var(--blue) 100%);
+          border: none; border-radius: var(--r-s); cursor: pointer;
+          display: flex; align-items: center; justify-content: center; gap: 10px;
+          transition: transform .15s, box-shadow .15s;
+          overflow: hidden; position: relative;
+        }
+        .btn-main:hover   { transform:translateY(-2px); box-shadow:0 8px 28px rgba(26,86,219,.42) }
+        .btn-main:active  { transform:none; box-shadow:none }
+        .btn-main svg     { width:17px; height:17px; stroke:#fff; fill:none; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round }
+        .btn-main .spin   { display:none; width:18px; height:18px; border:2.5px solid rgba(255,255,255,.3); border-top-color:#fff; border-radius:50%; animation:spin .7s linear infinite }
+        .btn-main.loading .spin    { display:block }
+        .btn-main.loading .btn-lbl { display:none }
+        @keyframes spin { to { transform:rotate(360deg) } }
+
+        .btn-clear {
+          padding: 14px 20px;
+          font-family: 'Tajawal', sans-serif;
+          font-size: 14px; font-weight: 600; color: var(--slate);
+          background: #f0f4fa; border: 1.5px solid var(--border);
+          border-radius: var(--r-s); cursor: pointer; white-space: nowrap;
+          transition: background .15s, border-color .15s;
+        }
+        .btn-clear:hover { background: #e2eaf5; border-color:#b0c4de }
+
+        /* ══════════════════════════════════════════
+           REPORT SHELL
+        ══════════════════════════════════════════ */
+        .report { display:none; margin-top:28px; animation:fadeUp .45s ease both }
+
+        /* ─ Report header bar ─ */
+        .rpt-bar {
+          background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 55%, #1c3fa0 100%);
+          border-radius: var(--r) var(--r) 0 0;
+          padding: 32px 42px;
+          position: relative; overflow: hidden;
+        }
+        .rpt-bar::before {
+          content:''; position:absolute; top:-90px; left:-90px;
+          width:300px; height:300px; border-radius:50%;
+          background:rgba(255,255,255,.03); pointer-events:none;
+        }
+        .rpt-bar-top {
+          display: flex; align-items: flex-start;
+          justify-content: space-between; gap:14px;
+          margin-bottom: 26px; flex-wrap: wrap;
+        }
+        .rpt-title-group { display:flex; align-items:center; gap:13px }
+        .rpt-icon-box {
+          width: 44px; height: 44px; border-radius: 12px;
+          background: rgba(255,255,255,.13); display:flex;
+          align-items:center; justify-content:center; font-size:20px; flex-shrink:0;
+        }
+        .rpt-title { font-size:20px; font-weight:800; color:#fff }
+        .rpt-date  { font-size:12px; color:rgba(255,255,255,.42); margin-top:4px }
+        .mode-pill {
+          padding: 5px 16px; border-radius:30px;
+          font-size:12px; font-weight:700; align-self:flex-start;
+          background: rgba(255,255,255,.12);
+          border: 1px solid rgba(255,255,255,.2); color:#fff;
+        }
+        .mode-pill.premium { background:rgba(245,158,11,.22); border-color:rgba(245,158,11,.5); color:#fde68a }
+        .mode-pill.no_match{ background:rgba(239,68,68,.22);  border-color:rgba(239,68,68,.5);  color:#fecaca }
+
+        .summary-row { display:flex; flex-wrap:wrap; gap:10px }
+        .pill {
+          background: rgba(255,255,255,.10);
+          border: 1px solid rgba(255,255,255,.15);
+          border-radius: 40px; padding:9px 20px;
+          display:flex; align-items:center; gap:10px;
+        }
+        .pill-lbl { font-size:11px; color:rgba(255,255,255,.52); font-weight:500 }
+        .pill-val { font-size:16px; font-weight:800; color:#fff }
+
+        /* ─ Dynamic message ─ */
+        .dyn-msg {
+          border-right:1px solid var(--border); border-left:1px solid var(--border);
+          padding: 18px 42px;
+          display: flex; align-items: flex-start; gap:15px;
+        }
+        .dyn-msg.normal  { background:#eef6ff; border-bottom:1px solid #d4e8fb }
+        .dyn-msg.premium { background:var(--gold-bg); border-bottom:1px solid var(--gold-bd) }
+        .dyn-msg.no_match{ background:#fff5f5; border-bottom:1px solid var(--red-bd) }
+        .dyn-icon { font-size:24px; flex-shrink:0; margin-top:2px }
+        .dyn-title {
+          font-size:14px; font-weight:800; margin-bottom:5px;
+        }
+        .dyn-title.normal   { color:var(--navy2) }
+        .dyn-title.premium  { color:var(--gold) }
+        .dyn-title.no_match { color:var(--red) }
+        .dyn-body {
+          font-size:13.5px; line-height:1.75; white-space:pre-line;
+        }
+        .dyn-body.normal   { color:#1e3e6f }
+        .dyn-body.premium  { color:#78350f }
+        .dyn-body.no_match { color:var(--red) }
+
+        /* ─ Filter + Refresh bar ─ */
+        .toolbar {
+          background: var(--white);
+          border-right:1px solid var(--border); border-left:1px solid var(--border);
+          border-bottom:1px solid #edf2fb;
+          padding: 14px 42px;
+          display: flex; align-items:center; justify-content:space-between;
+          flex-wrap:wrap; gap:12px;
+        }
+        .filter-group { display:flex; align-items:center; gap:8px; flex-wrap:wrap }
+        .filter-lbl   { font-size:13px; font-weight:600; color:var(--slate) }
+        .fbtn {
+          padding: 6px 15px; border-radius:22px;
+          font-family:'Tajawal',sans-serif;
+          font-size:12px; font-weight:600; cursor:pointer;
+          border: 1.5px solid var(--border); background:var(--white); color:var(--slate);
+          transition:all .15s;
+        }
+        .fbtn:hover:not(.on) { background:var(--sky); border-color:var(--blue3) }
+        .fbtn.on { background:var(--navy); border-color:var(--navy); color:#fff }
+
+        .more-grp { display:flex; align-items:center; gap:12px; flex-wrap:wrap }
+        .btn-refresh {
+          padding:10px 20px;
+          font-family:'Tajawal',sans-serif;
+          font-size:13px; font-weight:700; color:var(--gold);
+          background:var(--gold-bg); border:1.5px solid var(--gold-bd);
+          border-radius:var(--r-s); cursor:pointer;
+          display:flex; align-items:center; gap:8px;
+          transition:transform .15s, box-shadow .15s;
+        }
+        .btn-refresh:hover { transform:translateY(-1px); box-shadow:0 4px 14px rgba(245,158,11,.32) }
+        .btn-refresh:active{ transform:none; box-shadow:none }
+        .btn-refresh svg { width:14px; height:14px; stroke:currentColor; fill:none; stroke-width:2.5; stroke-linecap:round; transition:transform .4s }
+        .btn-refresh:hover svg { transform:rotate(180deg) }
+        .btn-refresh:disabled { opacity:.45; cursor:not-allowed; transform:none; box-shadow:none }
+        .more-hint { font-size:12px; color:var(--slate2) }
+        .filter-count { font-size:12.5px; color:var(--slate2); font-weight:500 }
+
+        /* ── Premium note bar (inside toolbar) ── */
+        .prem-count-bar {
+          display:none;
+          background:linear-gradient(to left,#fffbeb,#fff);
+          border-right:1px solid var(--border); border-left:1px solid var(--border);
+          border-bottom:1px solid var(--gold-bd);
+          padding:12px 42px;
+          font-size:13px; color:var(--gold); font-weight:600;
+          align-items:center; gap:8px;
+        }
+        .prem-count-bar.visible { display:flex }
+
+        /* ══════════════════════════════════════════
+           CARD LIST
+        ══════════════════════════════════════════ */
+        .card-list {
+          background: var(--white);
+          border: 1px solid var(--border); border-top:none;
+          border-radius: 0 0 var(--r) var(--r);
+          overflow: hidden;
+        }
+
+        /* ── Individual card ── */
+        .rec-card {
+          padding: 28px 42px;
+          border-bottom: 1px solid #f0f5fc;
+          position: relative; transition:background .15s;
+        }
+        .rec-card:last-child  { border-bottom:none }
+        .rec-card:hover       { background:#f8fbff }
+        .rec-card.prem-card   {
+          background:linear-gradient(to left,#fffef5 0%,#fff 100%);
+          border-right:3px solid var(--gold-bd);
+        }
+        .rec-card.prem-card:hover { background:linear-gradient(to left,#fffbeb,#fffef9) }
+
+        /* ─ Rank badge ─ */
+        .rank-badge {
+          position:absolute; right:42px; top:28px;
+          min-width:38px; height:38px; border-radius:11px;
+          display:flex; align-items:center; justify-content:center;
+          font-size:15px; font-weight:700;
+          background:var(--sky); border:1.5px solid var(--sky2); color:var(--blue);
+        }
+        .rank-badge.r1 { background:linear-gradient(135deg,#fef3c7,#fde68a); border-color:#f59e0b; color:#78350f; font-size:18px }
+        .rank-badge.r2 { background:#f0f4f8; border-color:#cbd5e1; color:#4b5563; font-size:18px }
+        .rank-badge.r3 { background:#fff7ed; border-color:#fed7aa; color:#9a3412; font-size:18px }
+        .rank-badge.rp { background:linear-gradient(135deg,#fef9c3,#fde68a); border-color:#f59e0b; color:#78350f }
+
+        /* ─ Activity title ─ */
+        .card-head    { padding-right:58px; margin-bottom:14px }
+        .card-title   { font-size:19px; font-weight:800; color:var(--navy); margin-bottom:9px; line-height:1.3 }
+        .card-meta    { display:flex; flex-wrap:wrap; align-items:center; gap:9px }
+
+        /* ─ Competition badge ─ */
+        .comp {
+          display:inline-flex; align-items:center; gap:5px;
+          padding: 5px 14px; border-radius:22px;
+          font-size:12px; font-weight:700; border:1.5px solid;
+        }
+        .comp-Low    { background:var(--green-bg); color:var(--green); border-color:var(--green-bd) }
+        .comp-Medium { background:var(--amber-bg); color:var(--amber); border-color:var(--amber-bd) }
+        .comp-High   { background:var(--red-bg);   color:var(--red);   border-color:var(--red-bd)   }
+        .comp-dot    { width:6px; height:6px; border-radius:50%; background:currentColor }
+
+        /* ─ Suitability bar ─ */
+        .suit-row   { display:flex; align-items:center; gap:9px }
+        .suit-lbl   { font-size:12px; font-weight:600; color:var(--slate); white-space:nowrap }
+        .suit-track { width:110px; height:7px; background:#e2eaf6; border-radius:4px; overflow:hidden }
+        .suit-fill  {
+          height:100%; border-radius:4px;
+          background:linear-gradient(90deg, var(--blue2), var(--blue));
+          transition: width .9s cubic-bezier(.34,1.56,.64,1);
+        }
+        .prem-card .suit-fill { background:linear-gradient(90deg,#f59e0b,#d97706) }
+        .suit-pct   { font-size:14px; font-weight:800; color:var(--blue) }
+        .prem-card .suit-pct  { color:#b45309 }
+
+        /* ─ Examples ─ */
+        .ex-section { margin-bottom:16px }
+        .sec-lbl {
+          font-size:10.5px; font-weight:700; color:var(--slate2);
+          text-transform:uppercase; letter-spacing:.7px; margin-bottom:8px;
+          display:flex; align-items:center; gap:6px;
+        }
+        .chips { display:flex; flex-wrap:wrap; gap:6px }
+        .chip  {
+          background:#eff6ff; color:var(--navy2);
+          border:1px solid #bfdbfe; border-radius:22px;
+          padding:5px 14px; font-size:13px; font-weight:500;
+        }
+        .prem-card .chip { background:#fffbeb; border-color:#fde68a; color:#78350f }
+
+        /* ─ Stats grid ─ */
+        .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:12px }
+        .stat  { background:#f6faff; border:1px solid #e4eef9; border-radius:var(--r-m); padding:14px 16px }
+        .stat.hl { background:var(--sky); border-color:var(--sky2) }
+        .stat.surplus-box { background:#f0fdf4; border-color:#86efac }
+        .prem-card .stat        { background:#fff; border-color:#fde68a }
+        .prem-card .stat.hl     { background:#fffbeb; border-color:#fcd34d }
+        .prem-card .stat.surplus-box { background:#f0fdf4; border-color:#86efac }
+
+        .stat-lbl  { font-size:11.5px; font-weight:600; color:var(--slate2); margin-bottom:6px; line-height:1.4 }
+        .stat-val  { font-size:18px; font-weight:800; color:var(--navy) }
+        .stat-val.c-blue  { color:var(--blue)  }
+        .stat-val.c-green { color:#15803d }
+        .stat-desc { font-size:11px; color:var(--slate2); margin-top:4px; line-height:1.45 }
+
+        /* ─ Inline confirmation note ─ */
+        .confirm-note {
+          margin-top:12px; border-radius:var(--r-s);
+          padding:10px 15px; font-size:13px; font-weight:500;
+          display:flex; align-items:flex-start; gap:8px; line-height:1.55;
+        }
+        .confirm-note.blue  { background:#eff6ff; border:1px solid #bfdbfe; color:#1e3a6e }
+        .confirm-note.gold  { background:#fffbeb; border:1px solid #fde68a; color:#78350f }
+        .confirm-note svg   { width:15px; height:15px; stroke:currentColor; fill:none; stroke-width:2.5; flex-shrink:0; margin-top:1px }
+
+        /* ─ Permits ─ */
+        .permits-section { border-top:1px dashed #dde8f5; padding-top:14px; margin-top:14px }
+        .permits-grid    { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:8px }
+        .permit-row      { display:flex; align-items:flex-start; gap:7px; font-size:12.5px; color:#2d4070; line-height:1.5 }
+        .permit-dot      { width:5px; height:5px; border-radius:50%; background:var(--blue2); flex-shrink:0; margin-top:5px }
+
+        /* ══════════════════════════════════════════
+           EMPTY STATES
+        ══════════════════════════════════════════ */
+        .empty {
+          background:var(--white);
+          border:1px solid var(--border); border-top:none;
+          border-radius:0 0 var(--r) var(--r);
+          padding:72px 20px; text-align:center;
+        }
+        .empty-ico   { font-size:56px; margin-bottom:14px; opacity:.6 }
+        .empty-title { font-size:19px; font-weight:700; color:var(--navy); margin-bottom:8px }
+        .empty-sub   { font-size:14px; color:var(--slate2); max-width:380px; margin:0 auto; line-height:1.7 }
+
+        /* ══════════════════════════════════════════
+           RESPONSIVE
+        ══════════════════════════════════════════ */
+        @media(max-width:740px){
+          .form-grid        { grid-template-columns:1fr }
+          .btn-row          { grid-template-columns:1fr; gap:10px }
+          .input-card       { padding:26px 22px 22px }
+          .rpt-bar          { padding:24px 22px }
+          .dyn-msg          { padding:16px 22px }
+          .toolbar          { padding:12px 22px }
+          .prem-count-bar   { padding:12px 22px }
+          .rec-card         { padding:22px 22px }
+          .rank-badge       { right:22px; top:22px }
+          .card-head        { padding-right:52px }
+          .stats            { grid-template-columns:1fr 1fr }
+          .permits-grid     { grid-template-columns:1fr }
+          .logo             { font-size:50px }
+          .tagline          { font-size:15px }
+        }
+        @media(max-width:440px){
+          .summary-row { flex-direction:column; gap:8px }
+          .stats       { grid-template-columns:1fr 1fr }
+        }
+
+        /* ══════════════════════════════════════════
+           SCENARIOS (no_match mode)
+        ══════════════════════════════════════════ */
+        .scenarios-wrap {
+          display: flex; flex-direction: column; gap: 28px;
+          margin-top: 28px;
+          animation: fadeUp .5s ease both;
+        }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+        .scenario-box {
+          background: #fff; border-radius: var(--r);
+          box-shadow: var(--sh2); overflow: hidden;
+          border: 1.5px solid var(--border);
+        }
+        .scenario-header {
+          display: flex; align-items: center; gap: 12px;
+          padding: 18px 22px; border-bottom: 1px solid var(--border);
+        }
+        .scenario-icon {
+          width: 42px; height: 42px; border-radius: 12px;
+          display: flex; align-items: center; justify-content: center;
+          font-size: 20px; flex-shrink: 0;
+        }
+        .scenario-icon.s1 { background: linear-gradient(135deg,#dbeafe,#bfdbfe); }
+        .scenario-icon.s2 { background: linear-gradient(135deg,#d1fae5,#a7f3d0); }
+        .scenario-title { font-size: 15px; font-weight: 800; color: var(--navy); }
+        .scenario-sub   { font-size: 12px; color: var(--slate2); margin-top:2px; }
+        .sc-cards { display: flex; flex-direction: column; }
+        .sc-card {
+          display: grid; grid-template-columns: 1fr auto;
+          align-items: start; gap: 12px;
+          padding: 15px 22px; border-bottom: 1px dashed var(--border);
+          transition: background .18s;
+        }
+        .sc-card:last-child { border-bottom: none; }
+        .sc-card:hover { background: #f8fbff; }
+        .sc-rank {
+          width: 28px; height: 28px; border-radius: 50%;
+          background: var(--navy); color:#fff;
+          font-size: 12px; font-weight: 700;
+          display: flex; align-items: center; justify-content: center;
+          flex-shrink: 0; margin-left: 10px;
+        }
+        .sc-card-left { display: flex; align-items: flex-start; gap: 0; }
+        .sc-body { flex: 1; }
+        .sc-name { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+        .sc-city-tag {
+          display: inline-flex; align-items: center; gap: 5px;
+          background: var(--sky2); border-radius: 20px;
+          padding: 2px 10px; font-size: 11px; font-weight: 600;
+          color: var(--blue); margin-bottom: 7px;
+        }
+        .sc-stats { display: flex; flex-wrap: wrap; gap: 8px; }
+        .sc-stat {
+          background: var(--sky); border-radius: 8px;
+          padding: 5px 10px; font-size: 11.5px; color: var(--slate);
+        }
+        .sc-stat strong { color: var(--navy); font-weight: 700; }
+        .cov-wrap { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; min-width: 90px; }
+        .cov-label { font-size: 10.5px; color: var(--slate2); font-weight: 600; }
+        .cov-bar-bg { width: 84px; height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden; }
+        .cov-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg,#f59e0b,#ef4444); transition: width .6s; }
+        .cov-pct { font-size: 13px; font-weight: 800; color: var(--amber); }
+        .gap-tag {
+          background: #fef2f2; border: 1px solid #fca5a5;
+          border-radius: 6px; padding: 3px 8px;
+          font-size: 11px; font-weight: 700; color: var(--red);
+          white-space: nowrap; margin-top: 4px; text-align: center;
+        }
+        .surplus-tag {
+          background: #f0fdf4; border: 1px solid #86efac;
+          border-radius: 6px; padding: 3px 8px;
+          font-size: 11px; font-weight: 700; color: #065f46;
+          white-space: nowrap; margin-top: 4px; text-align: center;
+        }
+        .sc-empty {
+          padding: 24px; text-align: center;
+          color: var(--slate2); font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-layer"></div>
+
+<!-- City skyline -->
+<svg class="city-bg" viewBox="0 0 1440 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax slice">
+    <rect x="0" y="172" width="60" height="128" rx="2" fill="#153882"/>
+    <rect x="8" y="150" width="42" height="22" rx="1" fill="#0c1e45"/>
+    <rect x="66" y="185" width="52" height="115" rx="2" fill="#1a56db"/>
+    <rect x="124" y="114" width="36" height="186" rx="2" fill="#153882"/>
+    <rect x="166" y="90" width="27" height="210" rx="2" fill="#0c1e45"/>
+    <rect x="199" y="150" width="46" height="150" rx="2" fill="#3b82f6"/>
+    <rect x="251" y="165" width="32" height="135" rx="2" fill="#153882"/>
+    <rect x="289" y="78" width="23" height="222" rx="2" fill="#0c1e45"/>
+    <rect x="318" y="126" width="56" height="174" rx="2" fill="#3b82f6"/>
+    <rect x="380" y="102" width="29" height="198" rx="2" fill="#153882"/>
+    <rect x="415" y="160" width="40" height="140" rx="2" fill="#93c5fd"/>
+    <rect x="1040" y="170" width="60" height="130" rx="2" fill="#153882"/>
+    <rect x="1048" y="148" width="42" height="22" rx="1" fill="#0c1e45"/>
+    <rect x="1106" y="183" width="52" height="117" rx="2" fill="#1a56db"/>
+    <rect x="1164" y="108" width="36" height="192" rx="2" fill="#153882"/>
+    <rect x="1206" y="84" width="27" height="216" rx="2" fill="#0c1e45"/>
+    <rect x="1239" y="148" width="46" height="152" rx="2" fill="#3b82f6"/>
+    <rect x="1291" y="162" width="32" height="138" rx="2" fill="#153882"/>
+    <rect x="1325" y="74" width="23" height="226" rx="2" fill="#0c1e45"/>
+    <rect x="1350" y="122" width="56" height="178" rx="2" fill="#3b82f6"/>
+    <rect x="1412" y="96" width="28" height="204" rx="2" fill="#153882"/>
+</svg>
+
+<div class="page">
+
+    <!-- ══ HEADER ══ -->
+    <header class="header">
+        <div class="eyebrow">منصة التوصيات الاستثمارية</div>
+        <h1 class="logo">بيّنة</h1>
+        <div class="logo-bar"></div>
+        <p class="tagline">
+            تمكين رواد الأعمال في المملكة العربية السعودية بتوصيات مبنية على بيانات حقيقية<br/>
+            مصمّمة خصيصاً لمدينتك ورأس مالك المتاح
+        </p>
+    </header>
+
+    <!-- ══ INPUT CARD ══ -->
+    <div class="input-card">
+        <div class="ic-top">
+            <div class="ic-icon-wrap">
+                <svg viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="m21 21-4.35-4.35"/>
+                </svg>
+            </div>
+            <div>
+                <div class="ic-text-title">اكتشف أفضل الفرص الاستثمارية</div>
+                <div class="ic-text-sub">اختر المنطقة والمدينة وأدخل رأس مالك للحصول على توصيات مخصّصة
+                </div>
+            </div>
+        </div>
+
+        <div class="form-grid">
+            <div class="field">
+                <label for="region"><span class="lbl-tag">🗺️</span>المنطقة</label>
+                <div class="sel-wrap">
+                    <select id="region" onchange="loadCities()">
+                        <option value="" disabled selected>اختر المنطقة</option>
+                    </select>
+                    <div class="arr"></div>
+                </div>
+            </div>
+            <div class="field">
+                <label for="city"><span class="lbl-tag">📍</span>المدينة</label>
+                <div class="sel-wrap">
+                    <select id="city">
+                        <option value="" disabled selected>اختر المدينة</option>
+                    </select>
+                    <div class="arr"></div>
+                </div>
+            </div>
+            <div class="field">
+                <label for="capital"><span class="lbl-tag">💰</span>رأس المال المتاح (ريال سعودي)</label>
+                <input type="number" id="capital" placeholder="مثال: 500,000" min="0" step="1000"/>
+            </div>
+        </div>
+
+        <div class="btn-row">
+            <button class="btn-main" id="searchBtn" onclick="doSearch()">
+                <div class="spin"></div>
+                <span class="btn-lbl" style="display:flex;align-items:center;gap:10px">
+          <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline
+                  points="22 4 12 14.01 9 11.01"/></svg>
+          عرض التوصيات الاستثمارية
+        </span>
+            </button>
+            <button class="btn-clear" onclick="doReset()">مسح الكل</button>
+        </div>
+    </div>
+
+    <!-- ══ REPORT ══ -->
+    <section class="report" id="report">
+
+        <!-- Header bar -->
+        <div class="rpt-bar">
+            <div class="rpt-bar-top">
+                <div>
+                    <div class="rpt-title-group">
+                        <div class="rpt-icon-box">📊</div>
+                        <div class="rpt-title">تقرير التوصيات الاستثمارية التجارية</div>
+                    </div>
+                    <div class="rpt-date" id="rpt-date"></div>
+                </div>
+                <div class="mode-pill" id="mode-pill">—</div>
+            </div>
+            <div class="summary-row">
+                <div class="pill"><span class="pill-lbl">المنطقة</span><span class="pill-val" id="p-region">—</span>
+                </div>
+                <div class="pill"><span class="pill-lbl">المدينة</span><span class="pill-val" id="p-city">—</span></div>
+                <div class="pill"><span class="pill-lbl">رأس المال</span><span class="pill-val" id="p-cap">—</span>
+                </div>
+                <div class="pill"><span class="pill-lbl">الأنشطة المتوافقة</span><span class="pill-val"
+                                                                                       id="p-total">—</span></div>
+                <div class="pill"><span class="pill-lbl">يُعرض منها</span><span class="pill-val" id="p-showing">—</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dynamic message -->
+        <div class="dyn-msg normal" id="dyn-msg">
+            <div class="dyn-icon" id="dyn-icon">ℹ️</div>
+            <div>
+                <div class="dyn-title normal" id="dyn-title"></div>
+                <div class="dyn-body normal" id="dyn-body"></div>
+            </div>
+        </div>
+
+        <!-- Premium count bar -->
+        <div class="prem-count-bar" id="prem-count-bar">
+            <span>⭐</span>
+            <span id="prem-count-txt"></span>
+        </div>
+
+        <!-- Toolbar (filters + refresh) -->
+        <div class="toolbar" id="toolbar" style="display:none">
+            <div class="filter-group">
+                <span class="filter-lbl">تصفية:</span>
+                <button class="fbtn on" onclick="doFilter('all',this)">الكل</button>
+                <button class="fbtn" onclick="doFilter('Low',this)">🟢 منافسة منخفضة</button>
+                <button class="fbtn" onclick="doFilter('Medium',this)">🟡 متوسطة</button>
+                <button class="fbtn" onclick="doFilter('High',this)">🔴 مرتفعة</button>
+                <span class="filter-count" id="filter-count"></span>
+            </div>
+            <div class="more-grp" id="more-grp" style="display:none">
+                <button class="btn-refresh" id="btnPrev" onclick="changePage(-1)">
+                    ← السابق
+                </button>
+                <button class="btn-refresh" id="btnNext" onclick="changePage(1)">
+                    التالي →
+                </button>
+                <span class="more-hint" id="more-hint"></span>
+            </div>
+        </div>
+
+        <!-- Cards container -->
+        <div class="card-list" id="card-list"></div>
+
+        <!-- Alternative Scenarios (no_match mode) -->
+        <div class="scenarios-wrap" id="scenarios-wrap" style="display:none"></div>
+
+    </section>
+
+</div><!-- /page -->
+
+<script>
+    /* ══════════════════════════════════════════
+       CONFIG — change API_BASE if backend is on
+       a different host/port e.g. http://localhost:5000
+    ══════════════════════════════════════════ */
+    const API_BASE = window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost'
+      ? 'http://127.0.0.1:5000'
+      : window.location.origin;
+
+    async function loadRegions() {
+      try {
+        const res  = await fetch(API_BASE + '/api/regions');
+        const data = await res.json();
+        const sel  = document.getElementById('region');
+        sel.innerHTML = '<option value="" disabled selected>اختر المنطقة</option>';
+        data.regions.forEach(r => {
+          const opt = document.createElement('option');
+          opt.value = r;
+          opt.textContent = r;
+          sel.appendChild(opt);
+        });
+      } catch(e) {
+        console.error('فشل تحميل المناطق:', e);
+      }
+    }
+
+    async function loadCities() {
+      try {
+        const region = document.getElementById('region').value;
+        const sel  = document.getElementById('city');
+        sel.innerHTML = '<option value="" disabled selected>اختر المدينة</option>';
+        if (!region) return;
+
+        const res  = await fetch(API_BASE + '/api/cities?region=' + encodeURIComponent(region));
+        const data = await res.json();
+        data.cities.forEach(c => {
+          const opt = document.createElement('option');
+          opt.value = c;
+          opt.textContent = c;
+          sel.appendChild(opt);
+        });
+      } catch(e) {
+        console.error('فشل تحميل المدن:', e);
+      }
+    }
+    loadRegions();
+
+    /* ══════════════════════════════════════════
+       STATE
+    ══════════════════════════════════════════ */
+    let S = {
+      mode:'', region:'', city:'', capital:0,
+      total:0, offset:0, nextOffset:0,
+      hasMore:false, hasPrev:false,
+      results:[], filter:'all'
+    };
+
+    /* ══════════════════════════════════════════
+       UTILS
+    ══════════════════════════════════════════ */
+    const fmt   = n => { const x = Number(n); return Number.isFinite(x) ? Math.round(x).toLocaleString('ar-SA') : '0'; };
+    const today = () => new Date().toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'});
+    const CL    = { Low:'منافسة منخفضة', Medium:'منافسة متوسطة', High:'منافسة مرتفعة' };
+    const CI    = { Low:'🟢', Medium:'🟡', High:'🔴' };
+
+    function setLoading(on){
+      const b = document.getElementById('searchBtn');
+      b.classList.toggle('loading',on); b.disabled = on;
+    }
+    function shake(id){
+      const el=document.getElementById(id);
+      el.style.animation='none'; el.offsetHeight;
+      el.style.animation='shakeAnim .42s ease';
+      el.addEventListener('animationend',()=>el.style.animation='',{once:true});
+    }
+
+    /* ══════════════════════════════════════════
+       SEARCH
+    ══════════════════════════════════════════ */
+    async function doSearch(){
+      const region  = document.getElementById('region').value;
+      const city    = document.getElementById('city').value;
+      const capital = parseFloat(document.getElementById('capital').value);
+      if(!region)                   { shake('region');  return }
+      if(!city)                     { shake('city');    return }
+      if(isNaN(capital)||capital<0) { shake('capital'); return }
+
+      S.region=region; S.city=city; S.capital=capital; S.offset=0; S.filter='all';
+      setLoading(true);
+      try{
+        const data = await callAPI(region,city,capital,0);
+        applyData(data);
+        document.getElementById('report').style.display='block';
+        document.getElementById('report').scrollIntoView({behavior:'smooth',block:'start'});
+      }catch(e){ alert('خطأ في الاتصال بالخادم:\n'+e.message) }
+      finally{ setLoading(false) }
+    }
+
+    /* ══════════════════════════════════════════
+       SHOW MORE
+    ══════════════════════════════════════════ */
+    async function changePage(direction){
+      const targetOffset = direction > 0 ? S.nextOffset : Math.max(0, S.offset - 10);
+      const btnPrev = document.getElementById('btnPrev');
+      const btnNext = document.getElementById('btnNext');
+
+      btnPrev.disabled = true;
+      btnNext.disabled = true;
+
+      try{
+        const data = await callAPI(S.region, S.city, S.capital, targetOffset);
+        applyData(data);                 // استبدال النتائج الحالية بدل إضافتها فوق القديمة
+        document.getElementById('card-list').scrollIntoView({behavior:'smooth',block:'start'});
+      }catch(e){ alert('خطأ: '+e.message) }
+    }
+
+    /* ══════════════════════════════════════════
+       FILTER
+    ══════════════════════════════════════════ */
+    function doFilter(comp, btn){
+      S.filter=comp;
+      document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));
+      btn.classList.add('on');
+      const list = comp==='all' ? S.results : S.results.filter(r=>r.competition_level===comp);
+      renderCards(list);
+      document.getElementById('filter-count').textContent = 'عرض '+list.length+' توصية';
+    }
+
+    /* ══════════════════════════════════════════
+       API CALL
+    ══════════════════════════════════════════ */
+    async function callAPI(region,city,capital,offset){
+      const res = await fetch(API_BASE+'/api/recommend',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({region,city,capital,offset})
+      });
+      const data = await res.json();
+      if(!res.ok) throw new Error(data.error||'خطأ غير معروف');
+      return data;
+    }
+
+    /* ══════════════════════════════════════════
+       APPLY DATA → UPDATE ALL UI
+    ══════════════════════════════════════════ */
+    function applyData(data){
+      S.mode       = data.mode;
+      S.total      = data.total;
+      S.results    = data.results || [];
+      S.offset     = data.offset ?? 0;
+      S.nextOffset = data.next_offset ?? (S.offset + S.results.length);
+      S.hasMore    = data.has_more;
+      S.hasPrev    = data.has_prev;
+
+      const startShown = S.total > 0 ? S.offset + 1 : 0;
+      const endShown   = S.offset + S.results.length;
+
+      // Pills
+      document.getElementById('p-region').textContent  = data.region || S.region || '—';
+      document.getElementById('p-city').textContent    = data.city;
+      document.getElementById('p-cap').textContent     = fmt(data.capital)+' ﷼';
+      document.getElementById('p-total').textContent   = data.total+' نشاط';
+      document.getElementById('p-showing').textContent = `${startShown}-${endShown} من ${S.total}`;
+      document.getElementById('rpt-date').textContent  = 'تاريخ التقرير: '+today();
+
+      // Mode pill
+      const pill = document.getElementById('mode-pill');
+      if(data.mode==='premium'){
+        pill.textContent='⭐ وضع رأس المال المفتوح'; pill.className='mode-pill premium';
+      } else if(data.mode==='normal'){
+        pill.textContent='✅ التوصية العادية'; pill.className='mode-pill';
+      } else if(data.mode==='low'){
+        pill.textContent='⚠️ رأس مال منخفض'; pill.className='mode-pill no_match';
+      } else {
+        pill.textContent='⚠️ لا يوجد تطابق'; pill.className='mode-pill no_match';
+      }
+
+      // Dynamic message
+      const msgLines = (data.message||'').split('\n');
+      const dMsg     = document.getElementById('dyn-msg');
+      const dIcon    = document.getElementById('dyn-icon');
+      const dTitle   = document.getElementById('dyn-title');
+      const dBody    = document.getElementById('dyn-body');
+      dMsg.className = 'dyn-msg '+(data.mode||'normal');
+      dTitle.className='dyn-title '+(data.mode||'normal');
+      dBody.className ='dyn-body ' +(data.mode||'normal');
+      if(data.mode==='premium'){
+        dIcon.textContent='⭐'; dTitle.textContent=msgLines[0]||'وضع رأس المال المفتوح';
+        dBody.textContent=msgLines.slice(1).join('\n');
+      } else if(data.mode==='low'){
+        dIcon.textContent='⚠️'; dTitle.textContent='أقرب الأنشطة لرأس مالك';
+        dBody.textContent=data.message||'';
+      } else if(data.mode==='no_match'){
+        dIcon.textContent='⚠️'; dTitle.textContent='لا توجد أنشطة مناسبة';
+        dBody.textContent=data.message||'';
+      } else {
+        dIcon.textContent='ℹ️'; dTitle.textContent='نتائج البحث';
+        dBody.textContent=data.message||'';
+      }
+
+      // Premium count bar
+      const pcb = document.getElementById('prem-count-bar');
+      if(data.mode==='premium'){
+        pcb.classList.add('visible');
+        const shown = (data.next_offset??data.total);
+        document.getElementById('prem-count-txt').textContent =
+          `جميع ${data.total} نشاط في متناولك — المعروض الآن: ${startShown}-${endShown} | المتبقي: ${Math.max(0, data.total-shown)}`;
+      } else { pcb.classList.remove('visible') }
+
+      // Toolbar + refresh
+      const toolbar = document.getElementById('toolbar');
+      toolbar.style.display = (S.results.length>0) ? 'flex' : 'none';
+      // reset filter btns
+      document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));
+      document.querySelector('.fbtn').classList.add('on');
+      document.getElementById('filter-count').textContent = 'عرض '+S.results.length+' توصية';
+
+      const rGrp = document.getElementById('more-grp');
+      const prevBtn = document.getElementById('btnPrev');
+      const nextBtn = document.getElementById('btnNext');
+      const rHint= document.getElementById('more-hint');
+
+      rGrp.style.display = (S.results.length > 0) ? 'flex' : 'none';
+      prevBtn.disabled = !data.has_prev;
+      nextBtn.disabled = !data.has_more;
+      prevBtn.style.opacity = data.has_prev ? '1' : '.4';
+      nextBtn.style.opacity = data.has_more ? '1' : '.4';
+
+      if(data.total > 0){
+        rHint.textContent = `المعروض ${startShown}-${endShown} من أصل ${data.total} نشاط`;
+      } else {
+        rHint.textContent = 'لا توجد نتائج للعرض';
+      }
+
+      // Cards
+      if(!S.results.length){
+        document.getElementById('card-list').innerHTML=`
+          <div class="empty">
+            <div class="empty-ico">🔍</div>
+            <div class="empty-title">لا توجد نتائج</div>
+            <div class="empty-sub">${data.message||'حاول تغيير الفلتر أو رفع رأس المال'}</div>
+          </div>`;
+      } else {
+        renderCards(S.results);
+      }
+
+      // ── عرض السيناريوهين عند no_match ──
+      const scenWrap = document.getElementById('scenarios-wrap');
+      if(data.mode==='no_match' && (data.scenario1||data.scenario2)){
+        scenWrap.style.display='flex';
+        scenWrap.innerHTML = buildScenarios(data.scenario1||[], data.scenario2||[], data.capital, data.city);
+      } else {
+        scenWrap.style.display='none';
+        scenWrap.innerHTML='';
+      }
+    }
+
+    /* ══════════════════════════════════════════
+       RENDER CARDS
+    ══════════════════════════════════════════ */
+    function renderCards(list){
+      document.getElementById('card-list').innerHTML = list.length
+        ? list.map(buildCard).join('')
+        : `<div class="empty"><div class="empty-ico">🔍</div><div class="empty-title">لا توجد نتائج بهذه الفلترة</div><div class="empty-sub">جرّب تصفية مختلفة</div></div>`;
+    }
+
+    function buildCard(r, i){
+      const rank   = S.offset + list_indexOf_safe(S.results,r) + 1;
+      const isPrem = S.mode==='premium';
+      const emo    = rank===1?'🥇':rank===2?'🥈':rank===3?'🥉':rank;
+      const rCls   = rank===1?'r1':rank===2?'r2':rank===3?'r3':isPrem?'rp':'';
+
+      const suit    = Math.round(Number(r.suitability_pct) || 0);
+      const surplus = Number(r.surplus_capital) || 0;
+      const gap     = Number(r.capital_gap) || 0;
+      const examples= Array.isArray(r.business_activity_examples)?r.business_activity_examples:[];
+      const permits = Array.isArray(r.required_permits)?r.required_permits:[];
+
+      const isShortage = gap > 0;
+
+      const monthsRunway = (r.total_monthly_cost>0 && surplus>0)
+        ? Math.floor(surplus/r.total_monthly_cost) : 0;
+      const surplusDesc = surplus>0
+        ? `الفائض يكفي لتغطية ${monthsRunway} شهر من التشغيل تقريباً`
+        : 'لا يوجد فائض بعد تغطية رأس المال المطلوب';
+      const shortageDesc = `يحتاج المستخدم إلى ${fmt(gap)} ﷼ إضافية لتغطية متوسط رأس المال المطلوب لهذا النشاط`;
+      const operDesc = r.total_monthly_cost>0
+        ? `إجمالي التكاليف الشهرية: ${fmt(r.total_monthly_cost)} ﷼`
+        : 'التكاليف التشغيلية الشهرية الكاملة';
+
+      return `
+    <div class="rec-card${isPrem?' prem-card':''}" data-comp="${r.competition_level}">
+      <div class="rank-badge ${rCls}">${emo}</div>
+
+      <div class="card-head">
+        <div class="card-title">${r.business_activity}</div>
+        <div class="card-meta">
+          <span class="comp comp-${r.competition_level}">
+            <span class="comp-dot"></span>
+            ${CI[r.competition_level]||''} ${CL[r.competition_level]||r.competition_level}
+          </span>
+          <div class="suit-row">
+            <span class="suit-lbl">ملاءمة رأس المال:</span>
+            <div class="suit-track"><div class="suit-fill" style="width:${suit}%"></div></div>
+            <span class="suit-pct">${suit}%</span>
+          </div>
+        </div>
+      </div>
+
+      ${examples.length?`
+      <div class="ex-section">
+        <div class="sec-lbl">🔹 أمثلة على هذا النشاط</div>
+        <div class="chips">${examples.map(e=>`<span class="chip">${e}</span>`).join('')}</div>
+      </div>`:''}
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-lbl">متوسط رأس المال المطلوب لهذا النشاط في مدينة ${S.city}</div>
+          <div class="stat-val">${fmt(r.avg_capital)} <small style="font-size:13px;font-weight:600">﷼</small></div>
+          <div class="stat-desc">المبلغ الأساسي لبدء النشاط</div>
+        </div>
+        <div class="stat hl">
+          <div class="stat-lbl">نسبة ملاءمة رأس مالك مقارنةً بمتوسط هذا النشاط</div>
+          <div class="stat-val ${isPrem?'':'c-blue'}">${suit}%</div>
+          <div class="stat-desc">${isShortage ? `رأس المال يغطي ${suit}% من المتوسط المطلوب` : 'رأس مالك يغطي المتطلب المالي لهذا النشاط'}</div>
+        </div>
+        <div class="stat">
+          <div class="stat-lbl">متوسط الإيجار الشهري للنشاط</div>
+          <div class="stat-val">${fmt(r.avg_rent_monthly)} <small style="font-size:13px;font-weight:600">﷼</small></div>
+          <div class="stat-desc">تكلفة شهرية ثابتة متوقعة</div>
+        </div>
+        <div class="stat">
+          <div class="stat-lbl">متوسط التكاليف التشغيلية الشهرية (رواتب + خدمات + تشغيل)</div>
+          <div class="stat-val">${fmt(r.operating_costs_monthly)} <small style="font-size:13px;font-weight:600">﷼</small></div>
+          <div class="stat-desc">${operDesc}</div>
+        </div>
+      </div>
+
+      ${isShortage ? `
+      <div class="stat" style="border-radius:var(--r-m);padding:13px 16px;border:1px solid #fca5a5;background:#fef2f2">
+        <div class="stat-lbl">المبلغ الناقص لتغطية رأس المال المطلوب لهذا النشاط</div>
+        <div class="stat-val" style="color:#b91c1c">${fmt(gap)} <small style="font-size:13px;font-weight:600">﷼</small></div>
+        <div class="stat-desc">${shortageDesc}</div>
+      </div>` : `
+      <div class="stat surplus-box" style="border-radius:var(--r-m);padding:13px 16px;border:1px solid #86efac">
+        <div class="stat-lbl">المبلغ المتبقي من رأس المال بعد الاستثمار في هذا النشاط</div>
+        <div class="stat-val c-green">${fmt(surplus)} <small style="font-size:13px;font-weight:600">﷼</small></div>
+        <div class="stat-desc">${surplusDesc}</div>
+      </div>`}
+
+      <div class="confirm-note ${isShortage?'gold':(isPrem?'gold':'blue')}">
+        <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        ${isPrem
+          ? `رأس مالك مناسب بالكامل لهذا النشاط في مدينة ${S.city} — تم تقييمه بناءً على انخفاض المنافسة وكفاءة التكاليف.`
+          : (isShortage
+              ? `رأس المال الحالي لا يغطي متوسط رأس المال المطلوب لهذا النشاط، وينقصه تقريباً ${fmt(gap)} ﷼.`
+              : `هذا النشاط مناسب لرأس المال المدخل بناءً على متوسطات مدينة ${S.city}.`)
+        }
+      </div>
+
+      ${permits.length?`
+      <div class="permits-section">
+        <div class="sec-lbl" style="margin-bottom:0">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          التصاريح والمتطلبات النظامية المطلوبة لهذا النشاط
+        </div>
+        <div class="permits-grid">
+          ${permits.map(p=>`<div class="permit-row"><div class="permit-dot"></div><span>${p}</span></div>`).join('')}
+        </div>
+      </div>`:''}
+
+    </div>`;
+    }
+
+    /* ══════════════════════════════════════════
+       BUILD SCENARIOS (no_match)
+    ══════════════════════════════════════════ */
+    function buildScenarios(s1, s2, capital, city){
+      const sc1html = s1.length ? s1.map((r,i) => `
+        <div class="sc-card">
+          <div class="sc-card-left">
+            <div class="sc-rank">${i+1}</div>
+            <div class="sc-body">
+              <div class="sc-name">${r.business_activity}</div>
+              <div class="sc-city-tag">🏙️ ${r.city}</div>
+              <div class="sc-stats">
+                <div class="sc-stat">💰 رأس المال: <strong>${fmt(r.avg_capital)} ﷼</strong></div>
+                <div class="sc-stat">🏪 إيجار شهري: <strong>${fmt(r.avg_rent_monthly)} ﷼</strong></div>
+                <div class="sc-stat">⚙️ تشغيل شهري: <strong>${fmt(r.operating_costs_monthly)} ﷼</strong></div>
+                <div class="sc-stat">📊 المنافسة: <strong>${CL[r.competition_level]||r.competition_level}</strong></div>
+              </div>
+            </div>
+          </div>
+          <div class="surplus-tag">+${fmt(r.surplus_capital)} ﷼<br>فائض</div>
+        </div>`).join('')
+      : `<div class="sc-empty">لا توجد أنشطة في مدن أخرى ضمن رأس المال المدخل.</div>`;
+
+      const sc2html = s2.length ? s2.map((r,i) => {
+        const cov = Math.min(r.coverage_pct, 100);
+        const covColor = cov>=80?'#10b981':cov>=50?'#f59e0b':'#ef4444';
+        return `
+        <div class="sc-card">
+          <div class="sc-card-left">
+            <div class="sc-rank">${i+1}</div>
+            <div class="sc-body">
+              <div class="sc-name">${r.business_activity}</div>
+              <div class="sc-city-tag">📍 ${r.city}</div>
+              <div class="sc-stats">
+                <div class="sc-stat">💰 رأس المال المطلوب: <strong>${fmt(r.avg_capital)} ﷼</strong></div>
+                <div class="sc-stat">🏪 إيجار شهري: <strong>${fmt(r.avg_rent_monthly)} ﷼</strong></div>
+                <div class="sc-stat">⚙️ تشغيل شهري: <strong>${fmt(r.operating_costs_monthly)} ﷼</strong></div>
+                <div class="sc-stat">📊 المنافسة: <strong>${CL[r.competition_level]||r.competition_level}</strong></div>
+              </div>
+            </div>
+          </div>
+          <div class="cov-wrap">
+            <div class="cov-label">نسبة التغطية</div>
+            <div class="cov-bar-bg"><div class="cov-bar-fill" style="width:${cov}%;background:${covColor}"></div></div>
+            <div class="cov-pct" style="color:${covColor}">${r.coverage_pct}%</div>
+            <div class="gap-tag">فجوة ${fmt(r.capital_gap)} ﷼</div>
+          </div>
+        </div>`;
+      }).join('')
+      : `<div class="sc-empty">لا توجد أنشطة في هذه المدينة.</div>`;
+
+      return `
+      <div class="scenario-box">
+        <div class="scenario-header">
+          <div class="scenario-icon s1">🌍</div>
+          <div>
+            <div class="scenario-title">فرص استثمارية في مدن أخرى</div>
+            <div class="scenario-sub">أفضل 5 أنشطة في مدن أخرى ضمن رأس مالك (${fmt(capital)} ﷼) — مرتّبة بأقل رأس مال مطلوب</div>
+          </div>
+        </div>
+        <div class="sc-cards">${sc1html}</div>
+      </div>
+      <div class="scenario-box">
+        <div class="scenario-header">
+          <div class="scenario-icon s2">🏙️</div>
+          <div>
+            <div class="scenario-title">أقرب المشاريع في مدينة ${city}</div>
+            <div class="scenario-sub">أقرب 5 أنشطة لرأس مالك مع نسبة التغطية والفجوة المالية</div>
+          </div>
+        </div>
+        <div class="sc-cards">${sc2html}</div>
+      </div>`;
+    }
+
+    function list_indexOf_safe(arr, item){
+      for(let i=0;i<arr.length;i++) if(arr[i]===item) return i;
+      return 0;
+    }
+
+    /* ══════════════════════════════════════════
+       RESET
+    ══════════════════════════════════════════ */
+    function doReset(){
+      document.getElementById('region').value='';
+      document.getElementById('city').innerHTML='<option value="" disabled selected>اختر المدينة</option>';
+      document.getElementById('capital').value='';
+      document.getElementById('report').style.display='none';
+      S={mode:'',region:'',city:'',capital:0,total:0,offset:0,nextOffset:0,hasMore:false,hasPrev:false,results:[],filter:'all'};
+      const prevBtn=document.getElementById('btnPrev'); if(prevBtn){ prevBtn.disabled=true; prevBtn.style.opacity='.4'; }
+      const nextBtn=document.getElementById('btnNext'); if(nextBtn){ nextBtn.disabled=false; nextBtn.style.opacity='1'; }
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+
+    /* Shake animation */
+    const _sty=document.createElement('style');
+    _sty.textContent=`@keyframes shakeAnim{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}`;
+    document.head.appendChild(_sty);
+
+    /* Enter key */
+    document.getElementById('capital').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch()});
+</script>
+</body>
+</html>
