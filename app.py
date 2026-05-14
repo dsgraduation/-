@@ -134,7 +134,8 @@ def recommend():
     city = str(data.get("city", "")).strip()
     capital = to_float(data.get("capital", 0), 0)
     offset = int(data.get("offset", 0) or 0)
-    limit = 10
+    competition_filter = str(data.get("competition_filter", "all")).strip()
+     limit = 10
 
     city_data = df[(df["region"] == region) & (df["city"] == city)].copy()
 
@@ -295,7 +296,17 @@ def recommend():
         "has_more": has_more,
         "limit": limit,
     })
-
-
+@app.route('/api/data', methods=['GET'])
+def get_all_data():
+    try:
+        # قراءة ملف الـ CSV وتحويله إلى قاموس (Dictionary) لإرساله كـ JSON
+        df = pd.read_csv(DATASET_PATH)
+        data = df.to_dict(orient='records')
+        return jsonify({
+            "status": "success",
+            "data": data
+        }), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 if __name__ == "__main__":
     app.run(debug=True)
