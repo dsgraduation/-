@@ -858,28 +858,45 @@
     /* ══════════════════════════════════════════
        FILTER
     ══════════════════════════════════════════ */
-    function doFilter(comp, btn){
-      S.filter=comp;
-      document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));
-      btn.classList.add('on');
-      const list = comp==='all' ? S.results : S.results.filter(r=>r.competition_level===comp);
-      renderCards(list);
-      document.getElementById('filter-count').textContent = 'عرض '+list.length+' توصية';
-    }
+    async function doFilter(comp, btn){
+  S.filter = comp;
+  S.offset = 0;
+
+  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+
+  try {
+    const data = await callAPI(S.region, S.city, S.capital, 0);
+    applyData(data);
+  } catch(e) {
+    alert('خطأ في الفلترة: ' + e.message);
+  }
+}
 
     /* ══════════════════════════════════════════
        API CALL
     ══════════════════════════════════════════ */
     async function callAPI(region,city,capital,offset){
-      const res = await fetch(API_BASE+'/api/recommend',{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({region,city,capital,offset})
-      });
-      const data = await res.json();
-      if(!res.ok) throw new Error(data.error||'خطأ غير معروف');
-      return data;
-    }
+  const res = await fetch(API_BASE+'/api/recommend',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      region,
+      city,
+      capital,
+      offset,
+      competition_filter: S.filter || 'all'
+    })
+  });
+
+  const data = await res.json();
+
+  if(!res.ok) {
+    throw new Error(data.error || 'خطأ غير معروف');
+  }
+
+  return data;
+}
 
     /* ══════════════════════════════════════════
        APPLY DATA → UPDATE ALL UI
