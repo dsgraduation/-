@@ -16,7 +16,15 @@ def add_cors_headers(response):
 
 
 import os
+
 DATASET_PATH = os.path.join(os.path.dirname(__file__), "FINAL_DATASET.csv")
+
+df = pd.read_csv(DATASET_PATH, encoding="utf-8-sig")
+
+print("DATASET PATH:", DATASET_PATH)
+print("ROWS:", len(df))
+print("COLUMNS:", df.columns.tolist())
+print("REGIONS SAMPLE:", df["region"].dropna().unique()[:10])
 
 # =========================
 # تحميل وتنظيف الداتا
@@ -135,7 +143,7 @@ def recommend():
     capital = to_float(data.get("capital", 0), 0)
     offset = int(data.get("offset", 0) or 0)
     competition_filter = str(data.get("competition_filter", "all")).strip()
-     limit = 10
+    limit = 10
 
     city_data = df[(df["region"] == region) & (df["city"] == city)].copy()
 
@@ -181,9 +189,9 @@ def recommend():
 
         # score يستخدم للترتيب فقط، وليس لعرض نسبة ملاءمة رأس المال
         rec_data["score"] = (
-            0.40 * rec_data["competition_value"]
-            + 0.30 * rec_data["rent_value"]
-            + 0.30 * rec_data["operating_value"]
+                0.40 * rec_data["competition_value"]
+                + 0.30 * rec_data["rent_value"]
+                + 0.30 * rec_data["operating_value"]
         )
 
         rec_data["suitability_pct"] = 100
@@ -204,10 +212,10 @@ def recommend():
 
         # score يستخدم لترتيب الأنشطة المناسبة فقط
         rec_data["score"] = (
-            0.50 * rec_data["capital_fit"]
-            + 0.20 * rec_data["competition_value"]
-            + 0.15 * rec_data["rent_value"]
-            + 0.15 * rec_data["operating_value"]
+                0.50 * rec_data["capital_fit"]
+                + 0.20 * rec_data["competition_value"]
+                + 0.15 * rec_data["rent_value"]
+                + 0.15 * rec_data["operating_value"]
         )
 
         # نسبة الملاءمة المعروضة = ملاءمة رأس المال فقط
@@ -231,10 +239,10 @@ def recommend():
         rec_data["capital_gap"] = (rec_data["avg_capital"] - capital).clip(lower=0)
 
         rec_data["score"] = (
-            0.70 * rec_data["capital_fit"]
-            + 0.10 * rec_data["competition_value"]
-            + 0.10 * rec_data["rent_value"]
-            + 0.10 * rec_data["operating_value"]
+                0.70 * rec_data["capital_fit"]
+                + 0.10 * rec_data["competition_value"]
+                + 0.10 * rec_data["rent_value"]
+                + 0.10 * rec_data["operating_value"]
         )
 
         rec_data["suitability_pct"] = rec_data["capital_fit"]
@@ -242,6 +250,8 @@ def recommend():
     # =========================
     # حسابات إضافية للعرض
     # =========================
+    if competition_filter in ["Low", "Medium", "High"]:
+        rec_data = rec_data[rec_data["competition_level"] == competition_filter].copy()
     rec_data["total_monthly_cost"] = rec_data["avg_rent_monthly_est"] + rec_data["operating_costs_monthly"]
     rec_data["surplus_capital"] = (capital - rec_data["avg_capital"]).clip(lower=0)
 
@@ -296,17 +306,8 @@ def recommend():
         "has_more": has_more,
         "limit": limit,
     })
-@app.route('/api/data', methods=['GET'])
-def get_all_data():
-    try:
-        # قراءة ملف الـ CSV وتحويله إلى قاموس (Dictionary) لإرساله كـ JSON
-        df = pd.read_csv(DATASET_PATH)
-        data = df.to_dict(orient='records')
-        return jsonify({
-            "status": "success",
-            "data": data
-        }), 200
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+
+
 if __name__ == "__main__":
     app.run(debug=True)
+
